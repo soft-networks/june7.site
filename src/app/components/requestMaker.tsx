@@ -10,6 +10,7 @@ export const RequestMaker = () => {
     const [needsIdea, setNeedsIdea] = useState(false);
     const [ideaIndex, setIdeaIndex] = useState(0);
     const { incrementStage } = useModalStage();
+    const { setStage } = useModalStage();
     useEffect(() => {
         syncIdeas((ideas) => setIdeas(ideas));
     }, []);
@@ -25,10 +26,15 @@ export const RequestMaker = () => {
         }
     }
     return <div className="textWidth stack border:black fill:white padded position:absolute:topcenter">
-        {!needsIdea &&<h4>make a request to shape june7.site</h4>}
-        {needsIdea && <h4>here's an idea for you: <br/>{ideas[ideaIndex]}</h4>}
+        <h4>make a request to shape this website</h4>
+        {!needsIdea && <p>your request can be anything: a feature you'd like added (or removed), a bug you're experiencing that you'd like to see fixed, or even a problem in your life that you'd like the website to help solve.</p>}
+        {needsIdea && <p>here's an idea to help inspire your request: <br/>{ideas[ideaIndex]}</p>}
         <RequestForm />
-        <div className="stack:horizontal fullWidth"><div className={buttonCSSSecondary + " fullWidth"} onClick={setNextIdea}>i need {needsIdea ? "another" : "an"} idea</div><div className={buttonCSSSecondary + " fullWidth"} onClick={close}>explore site</div></div>
+        <div className="stack:horizontal:s-1 fullWidth">
+            <div className={buttonCSSSecondary + " fullWidth"} onClick={setNextIdea}>{needsIdea ? "new idea please" : "i need an idea"}</div>
+            <div className={buttonCSSSecondary + " fullWidth"} onClick={() => { setStage(2);  }}>see requests</div>
+            <div className={buttonCSSSecondary + " fullWidth"} onClick={close}>explore site</div>
+        </div>
     </div>
 }
 
@@ -37,7 +43,7 @@ const RequestForm = () => {
     const [request, setRequest] = useState("");
     const [from, setFrom] = useState("");
     const { incrementStage } = useModalStage();
-    
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         addRequest({

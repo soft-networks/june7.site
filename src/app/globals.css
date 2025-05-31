@@ -325,10 +325,12 @@ body {
 }
 .center\:child\:vertical {
   align-items: center;
+  display: flex;
 }
 
 .center\:child\:horizontal {
   justify-content: center;
+  display: flex;
 }
 
 .center\:self\:horizontal, .center\:horizontal {

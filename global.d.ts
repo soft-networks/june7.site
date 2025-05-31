@@ -6,7 +6,7 @@ interface Request {
     from: string;
     request: string;
     timestamp: number;
-    status: "pending" | "completed" | "rejected";
+    status: "pending" | "completed" | "rejected" | "working";
     id: string;
 }
 
@@ -14,5 +14,6 @@ interface RequestCount {
     pending: number;
     completed: number;
     rejected: number;
+    working: number;
     total: number;
 }

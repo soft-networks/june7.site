@@ -4,16 +4,20 @@ import { syncRequests } from "../lib/requests";
 import { buttonCSSSecondary } from "../cssConstants";
 import useModalStage from "./useModalStage";
 import useModalIsOpen from "./useModalIsOpen";
+import useRequests from "./useRequests";
+import { request } from "http";
 
 const RequestList: React.FC = () => {
-    const [requests, setRequests] = useState<Request[]>([]);
+    const { requests } = useRequests();
     const { setStage } = useModalStage();
     const { close } = useModalIsOpen();
-    useEffect(() => {
-        syncRequests((requests) => setRequests(requests));
-    }, []);
+    const { requestCount } = useRequests();
     return <div className="position:absolute:topcenter textWidth stack fill:white padded border:black" style={{ maxHeight: "100%", overflowY: "auto" }}>
-        {requests.map((request) => <RequestCard key={request.id} request={request} />)}
+        <div className="stack:noGap">
+            <h4>there are {requests.length} requests</h4>
+            <p>{requestCount.pending} pending, {requestCount.completed} completed, {requestCount.rejected} rejected, {requestCount.working} in progress</p>
+        </div>
+        {requests.map((request, index) => <RequestCard key={index} request={request} />)}
         <div className="stack:horizontal">
             <div className={buttonCSSSecondary + " fullWidth"} onClick={() => setStage(1)}>make request</div>
             <div className={buttonCSSSecondary + " fullWidth"} onClick={close}>explore site</div>
@@ -37,6 +41,7 @@ const StatusRenderer = ({ status }: { status: Request["status"] }) => {
         {status === "pending" && "⏳"}
         {status === "completed" && "✅"}
         {status === "rejected" && "❌"}
+        {status === "working" && "🚧"}
     </span>
 }
 const TimeRenderer = ({ timestamp }: { timestamp: Request["timestamp"] }) => {

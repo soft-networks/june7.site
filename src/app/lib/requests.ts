@@ -33,9 +33,9 @@ export const syncRequestCount = (requestCountCallback: (requestCount: RequestCou
         const requestCount = snapshot.docs.reduce((acc, doc) => {
             const status = sanitizeRequestFromDB(doc.data()).status;
             acc[status as keyof RequestCount]++;
-            acc.total++;
+            acc.total++;    
             return acc;
-        }, { pending: 0, completed: 0, rejected: 0, total: 0 } as RequestCount);
+        }, { pending: 0, completed: 0, rejected: 0, working: 0, total: 0 } as RequestCount);
         requestCountCallback(requestCount);
     });
     return () => unsub();
