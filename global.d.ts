@@ -8,6 +8,7 @@ interface Request {
     timestamp: number;
     status: "pending" | "completed" | "rejected" | "working";
     id: string;
+    phoneNumber?: string;
 }
 
 interface RequestCount { 

@@ -26,9 +26,11 @@ export const RequestMaker = () => {
         }
     }
     return <div className="textWidth stack border:black fill:white padded position:absolute:topcenter">
-        <h4>make a request to shape this website</h4>
-        {!needsIdea && <p>your request can be anything: a feature you'd like added (or removed), a bug you're experiencing that you'd like to see fixed, or even a problem in your life that you'd like the website to help solve.</p>}
-        {needsIdea && <p>here's an idea to help inspire your request: <br/>{ideas[ideaIndex]}</p>}
+        <div className="stack:s-1">
+            <h4>make a request to shape this website</h4>
+            {!needsIdea && <p>your request can be anything: a feature you'd like added (or removed), a bug you're experiencing that you'd like to see fixed, or even a problem in your life that you'd like the website to help solve.</p>}
+            {needsIdea && <p>here's an idea to help inspire your request: <br/>{ideas[ideaIndex]}</p>}
+        </div>
         <RequestForm />
         <div className="stack:horizontal:s-1 fullWidth">
             <div className={buttonCSSSecondary + " fullWidth"} onClick={setNextIdea}>{needsIdea ? "new idea please" : "i need an idea"}</div>
@@ -38,19 +40,19 @@ export const RequestMaker = () => {
     </div>
 }
 
-
 const RequestForm = () => {
     const [request, setRequest] = useState("");
     const [from, setFrom] = useState("");
     const { incrementStage } = useModalStage();
-
+    const [phoneNumber, setPhoneNumber] = useState("");
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         addRequest({
             from,
             request,
             status: "pending",
-            timestamp: Date.now()
+            timestamp: Date.now(),
+            phoneNumber: phoneNumber
         } as Request);
         // Reset form (optional)
         setRequest("");
@@ -59,8 +61,8 @@ const RequestForm = () => {
     };
 
     return (
-        <form className="stack:s-1 fullHeight flex-1" onSubmit={handleSubmit}>
-            <div className="stack:s-2 flex-1">
+        <form className="stack fullHeight flex-1" onSubmit={handleSubmit}>
+            <div className="stack:s-2">
                 <label htmlFor="request" className="align:start">my request is...</label>
                 <textarea
                     id="request"
@@ -80,6 +82,16 @@ const RequestForm = () => {
                     value={from}
                     onChange={e => setFrom(e.target.value)}
                     required
+                />
+            </div>
+            <div className="stack:s-2">
+                <label htmlFor="phoneNumber" className="align:start">(optional) receive a text when it's done...</label>
+                <input
+                    id="phoneNumber"
+                    className="fullWidth border:gray padded:s-1"
+                    value={phoneNumber}
+                    onChange={e => setPhoneNumber(e.target.value)}
+                    placeholder="123-456-7890"
                 />
             </div>
             <button
