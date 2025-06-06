@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { syncRequests } from "../lib/requests";
-import { buttonCSSSecondary } from "../cssConstants";
+import { buttonCSSSecondary, modalCSS } from "../cssConstants";
 import useModalStage from "./useModalStage";
 import useModalIsOpen from "./useModalIsOpen";
 import useRequests from "./useRequests";
@@ -12,10 +12,10 @@ const RequestList: React.FC = () => {
     const { setStage } = useModalStage();
     const { close } = useModalIsOpen();
     const { requestCount } = useRequests();
-    return <div className="position:absolute:topcenter textWidth stack fill:white padded border:black" style={{ maxHeight: "100%", overflowY: "auto" }}>
-        <div className="stack:noGap">
-            <h4>there are {requests.length} requests</h4>
-            <p>{requestCount.pending} pending, {requestCount.completed} completed, {requestCount.rejected} rejected, {requestCount.working} in progress</p>
+    return <div className={modalCSS}>
+        <div className="stack:s-3">
+            <div className="h4">{requests.length} requests</div>
+            <div>{Math.round(requestCount.completed/requests.length*100)}% fulfilled</div>
         </div>
         {requests.map((request, index) => <RequestCard key={index} request={request} />)}
         <div className="stack:horizontal">
@@ -27,10 +27,10 @@ const RequestList: React.FC = () => {
 
 const RequestCard: React.FC<{ request: Request }> = ({ request }) => {
     return <div className="stack:noGap fullWidth">
-        <div className="stack:horizontal:s-1">
-            <div className="padded:s-2 border:gray border:noBottom">{request.from}</div>
-            <div className="padded:s-2 border:gray border:noBottom"><TimeRenderer timestamp={request.timestamp} /></div>
-            <div className="padded:s-2 border:gray border:noBottom"><StatusRenderer status={request.status} /></div>
+        <div className="stack:horizontal:s-2">
+            <div className="padded:s-4 border:gray border:noBottom">{request.from}</div>
+            <div className="padded:s-4 border:gray border:noBottom"><TimeRenderer timestamp={request.timestamp} /></div>
+            <div className="padded:s-4 border:gray border:noBottom"><StatusRenderer status={request.status} /></div>
         </div>
         <div className="padded:s-1 fill:contrast-light border:gray ">{request.request}</div>
     </div>

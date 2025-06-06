@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { buttonCSS, buttonCSSSecondary } from "../cssConstants"
+import { buttonCSS, buttonCSSSecondary, modalCSS } from "../cssConstants"
 import useModalIsOpen from "./useModalIsOpen";
 import { syncIdeas } from "../lib/ideas";
 import useModalStage from "./useModalStage";
@@ -19,22 +19,21 @@ export const RequestMaker = () => {
         do {
             newIndex = Math.floor(Math.random() * ideas.length);
         } while (newIndex === ideaIndex && ideas.length > 1);
-        
+
         setIdeaIndex(newIndex);
         if (needsIdea == false) {
             setNeedsIdea(true);
         }
     }
-    return <div className="textWidth stack border:black fill:white padded position:absolute:topcenter">
+    return <div className={modalCSS}>
         <div className="stack:s-1">
-            <h4>make a request to shape this website</h4>
-            {!needsIdea && <p>your request can be anything: a feature you'd like added (or removed), a bug you're experiencing that you'd like to see fixed, or even a problem in your life that you'd like the website to help solve.</p>}
-            {needsIdea && <p>here's an idea to help inspire your request: <br/>{ideas[ideaIndex]}</p>}
+            <div className="h4">make a request to shape this website</div>
+            {!needsIdea && <p>your request can be anything: a feature you'd like added (or removed), a bug you're experiencing that you'd like to see fixed, or even a problem in your life that you'd like the website to help solve. <span className="underline" onClick={() => setNeedsIdea(true)}>click here if you need an idea</span></p>}
+            {needsIdea && <p className="padded fill:contrast-light">a prompt: {ideas[ideaIndex]} <br/><span className="underline" onClick={setNextIdea}>click here for a new one</span></p>}
         </div>
         <RequestForm />
         <div className="stack:horizontal:s-1 fullWidth">
-            <div className={buttonCSSSecondary + " fullWidth"} onClick={setNextIdea}>{needsIdea ? "new idea please" : "i need an idea"}</div>
-            <div className={buttonCSSSecondary + " fullWidth"} onClick={() => { setStage(2);  }}>see requests</div>
+            <div className={buttonCSSSecondary + " fullWidth"} onClick={() => { setStage(2); }}>see requests</div>
             <div className={buttonCSSSecondary + " fullWidth"} onClick={close}>explore site</div>
         </div>
     </div>
@@ -67,7 +66,7 @@ const RequestForm = () => {
                 <textarea
                     id="request"
                     className="fullWidth border:gray padded:s-1"
-                    style={{ resize: "none" , minHeight: 250}}
+                    style={{ resize: "none", minHeight: 250 }}
                     value={request}
                     onChange={e => setRequest(e.target.value)}
                     required
@@ -98,7 +97,7 @@ const RequestForm = () => {
                 type="submit"
                 className={buttonCSS}
             >
-                submit!
+                submit request!
             </button>
         </form>
     );

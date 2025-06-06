@@ -31,5 +31,5 @@ const GuideOpener = () => {
     const { open } = useModalIsOpen();
     const { requestCount } = useRequests();
     const { setStage } = useModalStage();
-    return <div className="padded:s-2 fullWidth position:fixed fill:black color:white center:text">help build this website today by <span className="underline cursor:pointer" onClick={() => { setStage(1); open() }}>submitting a request</span></div>
+    return <div className="padded:s-2 fullWidth position:fixed fill:contrast color:white center:text"><span className="underline cursor:pointer" onClick={() => { setStage(0); open() }}>make a request to shape this website</span></div>
 }
