@@ -9,6 +9,7 @@ interface Request {
     status: "pending" | "completed" | "rejected" | "working";
     id: string;
     phoneNumber?: string;
+    votes: number;
 }
 
 interface RequestCount { 

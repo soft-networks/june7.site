@@ -17,8 +17,14 @@ export const sanitizeRequestFromDB = (id: string, request: any) => {
         request: request.request,
         status: request.status,
         timestamp: request.timestamp,
-        phoneNumber: request.phoneNumber
+        phoneNumber: request.phoneNumber,
+        votes: request.votes || 0
     } as Request;
+}
+
+export const updateRequestVotes = async (requestId: string, votes: number) => {
+    const docRef = doc(collectionRef, requestId);
+    await updateDoc(docRef, { votes });
 }
 
 export const syncRequests = (requestListCallback: (requestList: Request[]) => void) => {
