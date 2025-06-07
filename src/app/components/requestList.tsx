@@ -52,4 +52,5 @@ const TimeRenderer = ({ timestamp }: { timestamp: Request["timestamp"] }) => {
     const hours = Math.floor(minutes / 60);
     return `${hours}h ago`;
 }
+
 export default RequestList;

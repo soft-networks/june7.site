@@ -599,7 +599,7 @@ ul ul {
 }
 
 .fill\:contrast, .fill\:contrast\:hover:hover, .fill\:contrast\:hover:focus {
-  background-color: var(--contrast);
+  background-color: var(--contrast) !important;
 }
 
 .fill\:contrast-light, .fill\:contrast-light\:hover:hover, .fill\:contrast-light\:hover:focus {
